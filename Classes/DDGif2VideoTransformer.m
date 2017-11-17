@@ -24,6 +24,11 @@
 }
 
 - (void)generateVideoFromGif:(DDGifImage *)gif complete:(void (^)(DDVideoData *))complete {
+    if (!gif.isGif) {
+        DDDebugInfo(@"[Error] Image is not an animation image type!");
+        complete(nil);
+        return ;
+    }
     NSString *path = [[DDVideoCache defaultCache] pathForVideo:gif.name];
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
         if (self.forceUpdateVideo) {
@@ -65,9 +70,10 @@
     
     
     NSEnumerator<CIImage *> *enumerator = gif.CIImageEnumerator;
-    CIContext *ctx = [CIContext context];
-    __block CMTime time = CMTimeMake(0, 10);
-    CMTime frameTime = CMTimeMake(1, 10);
+    CIContext *ctx = [CIContext contextWithOptions:@{ kCIContextPriorityRequestLow: @YES }];
+    double frameHZ = gif.delayTime == 0 ? 10 : 1/gif.delayTime;
+    __block CMTime time = CMTimeMake(0, frameHZ);
+    CMTime frameTime = CMTimeMake(1, frameHZ);
     
     if ([assertWriter startWriting]) {
         [assertWriter startSessionAtSourceTime:time];

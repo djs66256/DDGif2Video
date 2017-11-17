@@ -67,14 +67,26 @@
         _path = path;
         _name = path.lastPathComponent.stringByDeletingPathExtension;
         
-        NSURL *url = [NSURL fileURLWithPath:path];
-        _imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)url, NULL);
-        _imageCount = CGImageSourceGetCount(_imageSource);
-        
-        CGImageRef image = CGImageSourceCreateImageAtIndex(_imageSource, 0, nil);
-        _width = CGImageGetWidth(image);
-        _height = CGImageGetHeight(image);
-        CGImageRelease(image);
+        if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
+            NSURL *url = [NSURL fileURLWithPath:path];
+            _imageSource = CGImageSourceCreateWithURL((__bridge CFURLRef)url, NULL);
+            if (_imageSource) {
+                _imageCount = CGImageSourceGetCount(_imageSource);
+                
+                NSDictionary *properties = (__bridge_transfer NSDictionary *)CGImageSourceCopyProperties(_imageSource, NULL);
+                NSDictionary *gifProperties = properties[(id)kCGImagePropertyGIFDictionary];
+                if (gifProperties) {
+                    _isGif = YES;
+                    _loopCount = [gifProperties[(id)kCGImagePropertyGIFLoopCount] integerValue];
+                    _delayTime = [gifProperties[(id)kCGImagePropertyGIFDelayTime] doubleValue];
+                    
+                    CGImageRef image = CGImageSourceCreateImageAtIndex(_imageSource, 0, nil);
+                    _width = CGImageGetWidth(image);
+                    _height = CGImageGetHeight(image);
+                    CGImageRelease(image);
+                }
+            }
+        }
     }
     return self;
 }

@@ -10,20 +10,11 @@
 
 @implementation DDVideoData
 
-- (instancetype)initWithGif:(DDGifImage *)image
-{
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
-}
-
 - (instancetype)initWithPath:(NSString *)path
 {
     self = [super init];
     if (self) {
-        
+        _path = path;
     }
     return self;
 }

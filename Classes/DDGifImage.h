@@ -14,6 +14,11 @@
 @property (nonatomic, strong, readonly) NSString *path;
 @property (nonatomic, strong, readonly) NSString *name;
 
+@property (assign, nonatomic) BOOL isGif;
+
+@property (nonatomic, assign) NSInteger loopCount;
+@property (nonatomic, assign) NSTimeInterval delayTime;
+
 @property (nonatomic, assign) CGFloat width;
 @property (nonatomic, assign) CGFloat height;
 @property (nonatomic, assign, readonly) NSInteger imageCount;

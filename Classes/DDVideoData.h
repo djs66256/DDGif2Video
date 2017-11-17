@@ -11,7 +11,8 @@
 
 @interface DDVideoData : NSObject
 
+@property (nonatomic, strong, readonly) NSString *path;
+
 - (instancetype)initWithPath:(NSString *)path;
-- (instancetype)initWithGif:(DDGifImage *)image;
 
 @end
