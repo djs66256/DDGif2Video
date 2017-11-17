@@ -87,12 +87,17 @@
                 CVReturn ret = CVPixelBufferPoolCreatePixelBuffer(NULL, writerInputAdaptor.pixelBufferPool, &pixelBuffer);
                 if (ret != kCVReturnSuccess) {
                     DDDebugInfo(@"[Error] CVPixelBuffer create error with code (%zd)!", ret);
+                    complete(nil);
+                    if (pixelBuffer) CVPixelBufferRelease(pixelBuffer);
+                    return;
                 }
                 if (pixelBuffer) {
                     [ctx render:ciImage toCVPixelBuffer:pixelBuffer];
                     
                     if (![writerInputAdaptor appendPixelBuffer:pixelBuffer withPresentationTime:time]) {
                         DDDebugInfo(@"[Error] Assert write error!");
+                        complete(nil);
+                        CVPixelBufferRelease(pixelBuffer);
                         return;
                     }
                     CVPixelBufferRelease(pixelBuffer);
