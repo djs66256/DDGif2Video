@@ -14,4 +14,8 @@
 
 - (NSString *)pathForVideo:(NSString *)name;
 
+- (NSInteger)loopCountForVideo:(NSString *)name;
+- (void)setLoopCount:(NSInteger)loopCount forKey:(NSString *)name;
+- (void)removeInfoForKey:(NSString *)name;
+
 @end

@@ -8,7 +8,11 @@
 
 #import "DDVideoCache.h"
 
-@implementation DDVideoCache
+const NSString *DDVideoLoopCountKey = @"DDVideoLoopCountKey";
+
+@implementation DDVideoCache {
+    NSMutableDictionary *_videoInfo;
+}
 
 + (instancetype)defaultCache {
     static dispatch_once_t onceToken;
@@ -19,9 +23,37 @@
     return cache;
 }
 
-- (NSString *)pathForVideo:(NSString *)name {
++ (NSString *)rootPath {
     NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
-    return [cachePath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", name]];
+    cachePath = [cachePath stringByAppendingPathComponent:@"gif_video"];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:cachePath]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:cachePath withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    return cachePath;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _videoInfo = [NSDictionary dictionaryWithContentsOfFile:[[DDVideoCache rootPath] stringByAppendingPathComponent:@"info.plist"]].mutableCopy;
+        if (_videoInfo == nil) {
+            _videoInfo = [NSMutableDictionary new];
+        }
+    }
+    return self;
+}
+
+- (NSInteger)loopCountForVideo:(NSString *)name {
+    return [_videoInfo[name][DDVideoLoopCountKey] integerValue];
+}
+
+- (void)setLoopCount:(NSInteger)loopCount forKey:(NSString *)name {
+    
+}
+
+- (NSString *)pathForVideo:(NSString *)name {
+    return [[DDVideoCache rootPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", name]];
 }
 
 @end

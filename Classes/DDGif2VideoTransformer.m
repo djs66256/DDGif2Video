@@ -29,11 +29,13 @@
         complete(nil);
         return ;
     }
-    NSString *path = [[DDVideoCache defaultCache] pathForVideo:gif.name];
+    NSString *name = gif.name;
+    NSString *path = [[DDVideoCache defaultCache] pathForVideo:name];
     if ([[NSFileManager defaultManager] fileExistsAtPath:path]) {
         if (self.forceUpdateVideo) {
             NSError *error;
             [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+            [[DDVideoCache defaultCache] removeInfoForKey:name];
             if (error) {
                 DDDebugInfo(@"[Error] %@", error.localizedDescription);
             }
@@ -74,6 +76,7 @@
     double frameHZ = gif.delayTime == 0 ? 10 : 1/gif.delayTime;
     __block CMTime time = CMTimeMake(0, frameHZ);
     CMTime frameTime = CMTimeMake(1, frameHZ);
+    NSInteger loopCount = gif.loopCount;
     
     if ([assertWriter startWriting]) {
         [assertWriter startSessionAtSourceTime:time];
@@ -83,6 +86,7 @@
                 if (ciImage == nil) {
                     [writerInput markAsFinished];
                     [assertWriter finishWritingWithCompletionHandler:^{
+                        [[DDVideoCache defaultCache] setLoopCount:loopCount forKey:name];
                         DDVideoData *video = [[DDVideoData alloc] initWithPath:path];
                         complete(video);
                     }];
@@ -111,6 +115,10 @@
                 }
             }
         }];
+    }
+    else {
+        DDDebugInfo(@"[Error] assertWriter cannot start writing!");
+        complete(nil);
     }
 }
 

@@ -7,11 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "DDGifImage.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface DDVideoData : NSObject
 
 @property (nonatomic, strong, readonly) NSString *path;
+
+@property (nonatomic, assign, readonly) NSInteger loopCount;
 
 - (instancetype)initWithPath:(NSString *)path;
 
