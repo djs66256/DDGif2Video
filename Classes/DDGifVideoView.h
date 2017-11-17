@@ -12,8 +12,13 @@
 
 @interface DDGifVideoView : UIView
 
-- (instancetype)initWithPath:(NSString *)path;
-- (instancetype)initWithGif:(DDGifImage *)gif;
-- (instancetype)initWithVideo:(DDVideoData *)video;
+- (void)setGifPath:(NSString *)path;
+- (void)setGif:(DDGifImage *)gif;
+
+- (void)setVideo:(DDVideoData *)video;
+
+- (void)start;
+- (void)stop;
+- (void)pause;
 
 @end

@@ -16,9 +16,7 @@
     self = [super init];
     if (self) {
         _path = path;
-        
         _loopCount = [[DDVideoCache defaultCache] loopCountForVideo:path.lastPathComponent.stringByDeletingPathExtension];
-        
     }
     return self;
 }

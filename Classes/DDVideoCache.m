@@ -11,6 +11,7 @@
 const NSString *DDVideoLoopCountKey = @"DDVideoLoopCountKey";
 
 @implementation DDVideoCache {
+    NSString *_videoInfoPath;
     NSMutableDictionary *_videoInfo;
 }
 
@@ -36,7 +37,8 @@ const NSString *DDVideoLoopCountKey = @"DDVideoLoopCountKey";
 {
     self = [super init];
     if (self) {
-        _videoInfo = [NSDictionary dictionaryWithContentsOfFile:[[DDVideoCache rootPath] stringByAppendingPathComponent:@"info.plist"]].mutableCopy;
+        _videoInfoPath = [[DDVideoCache rootPath] stringByAppendingPathComponent:@"info.plist"];
+        _videoInfo = [NSDictionary dictionaryWithContentsOfFile:_videoInfoPath].mutableCopy;
         if (_videoInfo == nil) {
             _videoInfo = [NSMutableDictionary new];
         }
@@ -49,7 +51,13 @@ const NSString *DDVideoLoopCountKey = @"DDVideoLoopCountKey";
 }
 
 - (void)setLoopCount:(NSInteger)loopCount forKey:(NSString *)name {
-    
+    _videoInfo[name] = @{DDVideoLoopCountKey: @(loopCount)};
+    [_videoInfo writeToFile:_videoInfoPath atomically:YES];
+}
+
+- (void)removeInfoForKey:(NSString *)name {
+    [_videoInfo removeObjectForKey:name];
+    [_videoInfo writeToFile:_videoInfoPath atomically:YES];
 }
 
 - (NSString *)pathForVideo:(NSString *)name {

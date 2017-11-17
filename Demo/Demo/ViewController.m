@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "DDGif2VideoTransformer.h"
+#import "DDGifVideoView.h"
 
 @interface ViewController ()
 
@@ -20,9 +21,13 @@
     // Do any additional setup after loading the view, typically from a nib.
     DDGifImage *image = [[DDGifImage alloc] initWithPath:[NSBundle.mainBundle pathForResource:@"test1" ofType:@"gif"]];
     [DDGif2VideoTransformer sharedInstance].forceUpdateVideo = YES;
-    [[DDGif2VideoTransformer sharedInstance] generateVideoFromGif:image complete:^(DDVideoData *video) {
-        
-    }];
+//    [[DDGif2VideoTransformer sharedInstance] generateVideoFromGif:image complete:^(DDVideoData *video) {
+//
+//    }];
+    
+    DDGifVideoView *view = [[DDGifVideoView alloc] initWithFrame:self.view.bounds];
+    [self.view addSubview:view];
+    [view setGif:image];
 }
 
 
