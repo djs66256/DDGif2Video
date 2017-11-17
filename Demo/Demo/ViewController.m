@@ -20,14 +20,23 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     DDGifImage *image = [[DDGifImage alloc] initWithPath:[NSBundle.mainBundle pathForResource:@"test1" ofType:@"gif"]];
-    [DDGif2VideoTransformer sharedInstance].forceUpdateVideo = YES;
+//    [DDGif2VideoTransformer sharedInstance].forceUpdateVideo = YES;
 //    [[DDGif2VideoTransformer sharedInstance] generateVideoFromGif:image complete:^(DDVideoData *video) {
 //
 //    }];
     
-    DDGifVideoView *view = [[DDGifVideoView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:view];
-    [view setGif:image];
+    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height/2);
+    DDGifVideoView *view1 = [[DDGifVideoView alloc] initWithFrame:frame];
+    view1.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    [self.view addSubview:view1];
+    [view1 setGif:image];
+    
+    
+    frame.origin.y = self.view.frame.size.height/2;
+    DDGifVideoView *view2 = [[DDGifVideoView alloc] initWithFrame:frame];
+    view2.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    [self.view addSubview:view2];
+    [view2 setGifPath:[NSBundle.mainBundle pathForResource:@"test2" ofType:@"gif"]];
 }
 
 

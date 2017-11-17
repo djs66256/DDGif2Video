@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		650BD0261FBF2B7A0032F57D /* test2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 650BD0251FBF2B7A0032F57D /* test2.gif */; };
 		BEE8EFBD1FBEC8AC00450737 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE8EFBC1FBEC8AC00450737 /* AppDelegate.m */; };
 		BEE8EFC01FBEC8AC00450737 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEE8EFBF1FBEC8AC00450737 /* ViewController.m */; };
 		BEE8EFC31FBEC8AC00450737 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEE8EFC11FBEC8AC00450737 /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		650BD0251FBF2B7A0032F57D /* test2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = test2.gif; sourceTree = "<group>"; };
 		BEE8EFB81FBEC8AC00450737 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEE8EFBB1FBEC8AC00450737 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BEE8EFBC1FBEC8AC00450737 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				BEE8EFEA1FBEDEEF00450737 /* test1.gif */,
+				650BD0251FBF2B7A0032F57D /* test2.gif */,
 				BEE8EFD11FBEC8C100450737 /* Classes */,
 				BEE8EFBA1FBEC8AC00450737 /* Demo */,
 				BEE8EFB91FBEC8AC00450737 /* Products */,
@@ -188,6 +191,7 @@
 				BEE8EFEB1FBEDEEF00450737 /* test1.gif in Resources */,
 				BEE8EFC51FBEC8AC00450737 /* Assets.xcassets in Resources */,
 				BEE8EFC31FBEC8AC00450737 /* Main.storyboard in Resources */,
+				650BD0261FBF2B7A0032F57D /* test2.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

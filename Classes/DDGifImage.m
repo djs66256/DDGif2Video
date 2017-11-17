@@ -78,7 +78,11 @@
                 if (gifProperties) {
                     _isGif = YES;
                     _loopCount = [gifProperties[(id)kCGImagePropertyGIFLoopCount] integerValue];
-                    _delayTime = [gifProperties[(id)kCGImagePropertyGIFDelayTime] doubleValue];
+                    NSNumber *delayTime = gifProperties[(id)kCGImagePropertyGIFUnclampedDelayTime];
+                    if (delayTime == nil) {
+                        delayTime = gifProperties[(id)kCGImagePropertyGIFDelayTime];
+                    }
+                    _delayTime = [delayTime doubleValue];
                     
                     CGImageRef image = CGImageSourceCreateImageAtIndex(_imageSource, 0, nil);
                     _width = CGImageGetWidth(image);
